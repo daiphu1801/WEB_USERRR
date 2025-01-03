@@ -45,9 +45,15 @@ public class UserDao {
         String jpql = "SELECT u FROM User_Entity u WHERE u.EMAIL_ACC = :mail";
         TypedQuery<User_Entity> query = entityManager.createQuery(jpql, User_Entity.class);
         query.setParameter("mail", mail);
+
         List<User_Entity> result = query.getResultList();
-        return result.getFirst();
+        if (!result.isEmpty()) {
+            return result.get(0); // Lấy phần tử đầu tiên
+        } else {
+            return null; // Trả về null nếu không tìm thấy
+        }
     }
+
 
     public boolean isUserByMail(String mail) {
         String jpql = "SELECT u FROM User_Entity u WHERE u.EMAIL_ACC = :mail";
